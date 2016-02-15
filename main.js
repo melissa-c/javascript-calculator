@@ -18,9 +18,22 @@ $(function(){
     use parseFloat to convert numbers in a string into a number.
 */
 
+  var display ="";
+  // var number = "";
+  // var operator = "";
+
   $(".number, .operator, #decimal").click(function(){
-    $("#display").text($(this).text());
+    // display = $("#display").text($(this).text());
+    display = $("#display").text($(this).text());
 
   });
+
+  $("#clearAll").click(function(){
+    $("#display").text("0");
+  });
+
+
+
+
 
 });
