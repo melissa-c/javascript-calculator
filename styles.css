@@ -4,6 +4,10 @@ body {
   color: #fff;
 }
 
+.main {
+  padding-bottom: 30px;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 0;
