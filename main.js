@@ -1,17 +1,15 @@
 $(function(){
 
-  // if a number, operator or decimal is clicked: update text in display.
-  //   add each clicked button to the end of the display string.
-  // if equals is clicked: calculate the total of the display string.
-  //   replace operator symbol codes with the correct symbols
-  //     for calculations.
-  //   use parseFloat to convert numbers in a string into a number.
-
   $("#display").text(0);
   var entry = "";
 
   // assign click events for all buttons.  
   // set max character limit for display to 9.
+  // do not allow buttons to be clicked if the max string length
+  //   is reached.
+  // if a number, operator or decimal is clicked: 
+  //   update text in display by adding each clicked button
+  //   to the end of the display string.
   $(".number, .operator, #decimal").click(function(e){
     entry += $(this).text();
     if(entry.length > 9){
@@ -21,7 +19,7 @@ $(function(){
     }
   });
 
-  // if AC is clicked: clear the entire display string.
+  // if AC is clicked: clear the entire display string and show 0.
   $("#clearAll").click(function(){
     entry = "";
     $("#display").text(0);
@@ -29,6 +27,7 @@ $(function(){
 
   // if C is clicked: clear last pressed button from the display string
   //   with substr to remove last character.
+  // show 0 if entry is cleared of all characters.
   $("#clear").click(function(e){
     entry = entry.substr(0, entry.length -1);
     $("#display").text(entry);
@@ -37,7 +36,31 @@ $(function(){
       e.preventDefault();
     }
   });
+  // if equals is clicked: calculate the total of the display string.
+  //   replace operator symbol codes with the correct symbols
+  //     for calculations.
+  // ****** didn't know how to convert the op symbols from HTML code
+  //          to the math symbols below. Had to copy and paste from 
+  //          console log so JS could find them in the replace method.
+  $("#equals").click(function(){
+    var op = {
+      "÷": "/",
+      "×": "*",
+      "−": "-"
+    }
 
+    // find the operator symbol in string and replace with correct JS
+    //   symbols for calculations.
+    cleanUp = entry.replace(/[÷×−]/g, function(i){
+      return op[i];
+    });
 
+    // use eval to perform calculations on string.
+    // update entry to the result to allow for continuous 
+    //   calculations on the previous calculations.
+    result = eval(cleanUp);
+    entry = result;
+    $("#display").text(entry);
+  });
 
 });
