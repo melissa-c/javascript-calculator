@@ -4,14 +4,23 @@ $(function(){
   var entry = "";
 
   // assign click events for all buttons.  
-  // set max character limit for display to 9.
-  // do not allow buttons to be clicked if the max string length
-  //   is reached.
   // if a number, operator or decimal is clicked: 
   //   update text in display by adding each clicked button
   //   to the end of the display string.
   $(".number, .operator, #decimal").click(function(e){
     entry += $(this).text();
+
+    // if more than one operator is clicked consecutively then
+    //  remove the last op and replace with new op.
+    if(isNaN(entry.slice(-2,-1)) && isNaN($(this).text())) {
+      entry = entry.slice(0,-2) + $(this).text();
+    };
+
+
+    
+  // set max character limit for display to 9.
+  // do not allow buttons to be clicked if the max string length
+  //   is reached.
     if(entry.length > 9){
       e.preventDefault();
     } else {
@@ -48,6 +57,12 @@ $(function(){
       "×": "*",
       "−": "-"
     }
+
+    // if the last button clicked is not a number then remove it from
+    //  the end of the string.
+    if(isNaN(entry.slice(-1))){
+      entry = entry.slice(0, -1);
+    };
 
     // find the operator symbol in string and replace with correct JS
     //   symbols for calculations.
