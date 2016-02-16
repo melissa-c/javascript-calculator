@@ -11,13 +11,17 @@ $(function(){
     entry += $(this).text();
 
     // if more than one operator is clicked consecutively then
-    //  remove the last op and replace with new op.
-    if(isNaN(entry.slice(-2,-1)) && isNaN($(this).text())) {
+    //  remove the last op and replace with new op,
+    //  but if the last operator is not a minus and the new
+    //  operator is a minus then keep both for calculations
+    //  of negative numbers.
+    if(isNaN(entry.slice(-2, -1)) && isNaN($(this).text())) {
+      if(entry.slice(-2) !== "−" && $(this).text() === "−") {
+        entry += $(this).text();
+      }; 
       entry = entry.slice(0,-2) + $(this).text();
     };
 
-
-    
   // set max character limit for display to 9.
   // do not allow buttons to be clicked if the max string length
   //   is reached.
