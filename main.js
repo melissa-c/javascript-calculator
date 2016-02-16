@@ -1,11 +1,5 @@
 $(function(){
 /*
-  assign click events for all buttons:
-  
-  set max character limit for display to 9.
-
-  if AC is clicked: clear the entire display string.
-  
   if C is clicked: clear last pressed button from the display string
     with substr to remove last character.
   
@@ -18,18 +12,23 @@ $(function(){
     use parseFloat to convert numbers in a string into a number.
 */
 
-  var display ="";
-  // var number = "";
-  // var operator = "";
+  var entry = "";
 
-  $(".number, .operator, #decimal").click(function(){
-    // display = $("#display").text($(this).text());
-    display = $("#display").text($(this).text());
-
+  // assign click events for all buttons.  
+  // set max character limit for display to 9.
+  $(".number, .operator, #decimal").click(function(e){
+    entry += $(this).text();
+    if(entry.length > 9){
+      e.preventDefault();
+    } else {
+      display = $("#display").text(entry);      
+    }
   });
 
+  // if AC is clicked: clear the entire display string.
   $("#clearAll").click(function(){
-    $("#display").text("0");
+    entry = "";
+    $("#display").text(0);
   });
 
 

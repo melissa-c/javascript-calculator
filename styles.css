@@ -57,6 +57,10 @@ td {
   border-radius: 5px;
   font: bold 30px helvetica, sans-serif;
   box-shadow: 3px 3px #666;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  user-select: none; 
 }
 
 td:active,
