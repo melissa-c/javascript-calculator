@@ -12,13 +12,13 @@ $(function(){
 
     // if more than one operator is clicked consecutively then
     //  remove the last op and replace with new op,
-    //  but if the last operator is not a minus and the new
-    //  operator is a minus then keep both for calculations
-    //  of negative numbers.
+    //    but if the last operator is not a minus and the new
+    //    operator is a minus then keep both for calculations
+    //    of negative numbers.
     if(isNaN(entry.slice(-2, -1)) && isNaN($(this).text())) {
-      if(entry.slice(-2) !== "−" && $(this).text() === "−") {
+      if(entry.slice(-2 ,-1) !== "−" && $(this).text() === "−") {
         entry += $(this).text();
-      }; 
+      };
       entry = entry.slice(0,-2) + $(this).text();
     };
 
@@ -26,6 +26,7 @@ $(function(){
   // do not allow buttons to be clicked if the max string length
   //   is reached.
     if(entry.length > 9){
+      entry = entry.slice(0,8);
       e.preventDefault();
     } else {
       $("#display").text(entry);      
@@ -42,7 +43,8 @@ $(function(){
   //   with substr to remove last character.
   // show 0 if entry is cleared of all characters.
   $("#clear").click(function(e){
-    entry = entry.substr(0, entry.length -1);
+    clearLast = entry.substr(0, entry.length -1);
+    entry = clearLast;
     $("#display").text(entry);
     if(entry.length < 1){
       $("#display").text(0);
@@ -79,7 +81,21 @@ $(function(){
     //   calculations on the previous calculations.
     result = eval(cleanUp);
     entry = result;
-    $("#display").text(entry);
+
+    // if the calculation results in the number 0 then only show 0 
+    //  and make the string empty again so the 0 does not appear
+    //  at the beginning of the string when a button is clicked after
+    //  equals has been clicked.
+    // turn the end calculation from a number back into a string
+    //  so the clear button can be used to clear characters from
+    //   the end of the string.
+    if(entry === 0){
+      entry = "";
+      $("#display").text(0);
+    } else {
+      $("#display").text(entry);
+    };
+    entry = entry.toString(10);
   });
 
 });
